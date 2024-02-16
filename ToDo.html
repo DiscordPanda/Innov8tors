@@ -6,8 +6,48 @@
         <title>To-Do App</title> 
         <link rel="stylesheet" type="text/css" href="styles.css" />
     </head>
+    <header>
+        <h1 class="GroupName">Innov8tors</h1>
+        <!-- Attributes for links to other pages -->
+        <a class="header-links" href="https://icollege.gsu.edu/" target="_blank" title="Opens up GSU's iCollege website">
+            iCollege(GSU)
+        </a>
+        <a class="header-links" href="https://outlook.office365.com/mail/" target="_blank" title="Open up Outlook">
+            Outlook
+        </a>
+        <a class="header-links" href="https://onedrive.live.com/login/" target="_blank" title="Open up OneDrive">
+            OneDrive
+        </a>
+        <a class="header-links" href="https://www.dropbox.com/" target="_blank" title="Open up Dropbox">
+            Dropbox
+        </a>
+        <hr>
+    </header>
     <body>
-        
+        <!-- class "container" is the large white box on the page -->
+        <div class="container">
+            <!-- class "Task" is within the container -->
+            <div class="task">
+                <h3>Tasks to be done:</h3>
+                <!-- class "input" is where the user inputs the task. It's the textbox -->
+                <div class="input">
+                    <input type="text" id="task-box" placeholder="Enter a task">
+                    <button>Add</button>
+                    <button>Add2</button>
+                    <button>Add3</button>
+                </div>
+                <!-- id "task-items" is the list of tasks that are added. checked class = completed. unchecked class = incomplete -->
+                <ul id="task-items">
+                    <!-- These are example of completed and incomplete tasks -->
+                    <li class="checked">Task 1</li>
+                    <li class ="unchecked">Task 2</li>
+                    <li class ="unchecked">Task 3</li>
+                    <!-- TODO:JavaScript Comes here -->
+                </ul>
+            </div>
+        </div>
     </body> 
-    <h1>hello</h1>
+    <footer>
+        <h1>This is the footer</h1>
+    </footer>
 </html>
