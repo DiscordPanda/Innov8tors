@@ -1,10 +1,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&family=Protest+Riot&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+/* styles.css */
+
+body.login {
+    background-color: #b63030;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login_container {
+    background-color: #6068b1;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.login_container h2 {
+    margin-bottom: 20px;
+    color: #000000;
+    font-family: "Protest Riot", sans-serif;
+    font-size: 35px;
+}
+
+.login_form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.login_form label {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
+    color: #000000;
+    font-family: "Protest Riot", sans-serif;
+    text-align: left;
+}
+
+.login_form input[type="text"],
+.login_form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login_form input[type="submit"] {
+    font-family: "Protest Riot", sans-serif;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.login_form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+span {
+    display: block;
+    width: 100%; /* Set to 100% to make it as wide as the parent container */
+}
+
+
 .GroupName{
     text-align: center;
     font-family: "Protest Riot", sans-serif;
@@ -43,7 +117,7 @@ input{
     background: #edeef0;
     border-radius: 30px;
     margin:auto 0 auto;
-    width: 75%; 
+    width: calc(100% - 275px); 
     /* TODO: Change width when doing dropdown */
     height: 100%;
     font-size: 15px;
@@ -88,7 +162,7 @@ ul li{
     font-size: 18px;
     padding: 2px 10px;
     margin-top: 5px;
-    width: 50%;
+    width: calc(100% - 275px); 
     user-select: none;
     cursor: pointer;
     border-style: dotted;
