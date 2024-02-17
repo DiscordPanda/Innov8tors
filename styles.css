@@ -167,15 +167,12 @@ footer{
     width: 100%;
     position: relative;
 }
-header a.header-links{
-    font-family: "Protest Riot", sans-serif;
-    text-align: center;
-    color: blue; /* Change the color of the link text */
-    text-decoration: none; /* Remove the underline */
-    padding: 0px 10px; /* Add padding to the link */
-    font-size: 18px; /* Increase the font size */
-    border-radius: 10px; /* Rounded corners */
-}
+.header{
+    width:1200px;
+    height:150px;
+    background:#FFFFFF;
+    
+    }
 ul li{
     background-color: #edeef0;
     font-weight: bold;
@@ -191,6 +188,32 @@ ul li{
 ul li.checked{
     color: #555;
     text-decoration: line-through;
+}
+.navbar {
+    overflow: hidden;
+    background-color: hsla(0, 0%, 93%, 0.477);
+    font-family: Arial;
+  }
+  
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+}
+
+/* Style the topnav links */
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change color on hover and the colour when mouse hovers over link*/
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
 }
 /* TODO: JavaScript to add the 'x' symbol to the right of each task in the list 
 ul li span{
