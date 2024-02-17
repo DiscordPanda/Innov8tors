@@ -41,7 +41,13 @@
                     <input type="text" id="task-box" placeholder="Enter a task">
                     <button>Add</button>
                     <button>Add2</button>
-                    <button>Add3</button>
+                    <select name="priority" id="priority">
+                        <option hidden disabled selected value>Choose Priority</object>
+                        <option disabled value>--Choose Priority--</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
                 </div>
                 <!-- id "task-items" is the list of tasks that are added. checked class = completed. unchecked class = incomplete -->
                 <ul id="task-items">
