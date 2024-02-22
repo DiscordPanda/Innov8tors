@@ -1,3 +1,19 @@
+
+// Beginning of the login.html animation(s)
+var x = document.getElementById('login');
+var y = document.getElementById('register');
+var z = document.getElementById('button-color');
+function register() {
+    x.style.left = "-400px";
+    y.style.left = "0px";
+    z.style.left = "110px";
+}
+function login() {
+    x.style.left = "0";
+    y.style.left = "400px";
+    z.style.left = "0px";
+}
+// Beginning of ToDo.html 
 document.addEventListener('DOMContentLoaded', function () {
     const taskBox = document.getElementById('task-box');
     const addButton = document.querySelector('.input button');
