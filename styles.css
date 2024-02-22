@@ -1,84 +1,114 @@
 @import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anta&family=Protest+Riot&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-/* styles.css */
 
-body.login {
-    background-color: #b63030;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+/* Login page Start */
+#button-color{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 110px;
+    height: 100%;
+    background: linear-gradient(to right, rgb(231, 63, 63),rgb(243, 153, 168));
+    border-radius: 30px;
+    transition: 1s;
 }
-
-.login_container {
+#login{
+    left: 0px;
+}
+#register{
+    left: 450px;
+}
+.login-page{
     background-color: #6068b1;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 500px;
-    width: 100%;
+    display: relative;
+    height: 100% ;
+    width: 100% ;
+}
+.button-box{
+    width: 220px;
+    margin: 35px auto;
+    position: relative;
+    box-shadow: 0 0 20px 9px #ff61241f;
+    border-radius: 30px; 
     text-align: center;
 }
-
-.login_container h2 {
-    margin-bottom: 20px;
-    color: #000000;
-    font-family: "Protest Riot", sans-serif;
-    font-size: 35px;
-}
-
-.login_form {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-}
-
-.login_form label {
-    font-size: 18px;
-    display: block;
-    margin-bottom: 5px;
-    color: #000000;
-    font-family: "Protest Riot", sans-serif;
-    text-align: left;
-}
-
-.login_form input[type="text"],
-.login_form input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.login_form input[type="submit"] {
-    font-family: "Protest Riot", sans-serif;
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 5px;
-    border: none;
-    border-radius: 50px;
+.toggle-btn{
+    padding: 10px 15px 10px 30px;
     cursor: pointer;
-    font-size: 25px;
+    background: transparent;
+    border: 0;
+    /* outline: none; */
+    position: relative;
+    font-family: "Anta", sans-serif;
 }
+.form-box{
+    width: 425px;
+    height: 550px;
+    background: aliceblue;
+    padding: 0;
+    overflow: hidden;
+    font-family: sans-serif;
+    /* Always align the form-box to center, no-matter what size the page is */
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.input-fields{
+    top: 140px;
+    position: absolute;
+    width: 300px;
+    transition: 1s;
+    font-family: sans-serif;
+    margin-left: 62.5px;
 
-.login_form input[type="submit"]:hover {
-    background-color: #45a049;
 }
-span {
+.input-box{
+    width: 100%;
+    padding: 15px 0;
+    margin: 5px 0;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid #999;
+    outline: none;
+    background: transparent;
+}
+.submit-button{
+    width: 100%;
+    padding: 10px 30px;
+    cursor: pointer;
     display: block;
-    width: 100%; /* Set to 100% to make it as wide as the parent container */
+    margin: auto;
+    background: linear-gradient(to right, rgb(231, 63, 63),rgb(243, 153, 168));
+    position: center;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    font-family: "Anta", sans-serif;
+    text-align: center;
+}
+.check-box{
+    margin: 5px 10px 28px 0;
 }
 
+span.remember {
+    color: #777;
+    font-size: 12px;
+    bottom: 68px;
+    position: absolute;
+    font-weight: bold;
+    font-family: sans-serif;
+}
 
+/* ToDo-List Start */
 .GroupName{
     text-align: center;
     font-family: "Protest Riot", sans-serif;
@@ -110,7 +140,7 @@ span {
     font-family: "Protest Riot", sans-serif;
     font-size: 25px;
 }
-input{
+input.input-task{
     flex: 1;
     justify-content: space-between;
     align-items: center;
