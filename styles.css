@@ -249,18 +249,3 @@ ul li.checked{
     background-color: #ddd;
     color: black;
 }
-/* TODO: JavaScript to add the 'x' symbol to the right of each task in the list 
-ul li span{
-    position:absolute;
-    right: 0;
-    top: 5px;
-    width: 40px;
-    height: 40px;
-    font-size: 22px;
-    color: #555;
-    line-height: 40px;
-    text-align: center;
-}
-ul li span:hover{
-    background: #edeef0;
-} */
