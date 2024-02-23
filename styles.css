@@ -11,10 +11,10 @@
     top: 0;
     left: 0;
     position: absolute;
-    width: 110px;
+    width: 50%;
     height: 100%;
     background: linear-gradient(to right, rgb(231, 63, 63),rgb(243, 153, 168));
-    border-radius: 30px;
+    border-radius: 20px;
     transition: 1s;
 }
 #login{
@@ -30,7 +30,7 @@
     width: 100% ;
 }
 .button-box{
-    width: 220px;
+    width: 300px;
     margin: 35px auto;
     position: relative;
     box-shadow: 0 0 20px 9px #ff61241f;
@@ -38,13 +38,17 @@
     text-align: center;
 }
 .toggle-btn{
-    padding: 10px 15px 10px 30px;
+    height: 50px;
+    width: 140px;
+    padding: 10px 25px 10px 40px;
     cursor: pointer;
     background: transparent;
     border: 0;
-    /* outline: none; */
+    outline: none;
     position: relative;
     font-family: "Anta", sans-serif;
+    text-align: center;
+    align-items: center;
 }
 .form-box{
     width: 425px;
