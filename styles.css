@@ -213,7 +213,7 @@ ul li{
     font-size: 18px;
     padding: 2px 10px;
     margin-top: 5px;
-    width: calc(100% - 425px); 
+    width: calc(100% - 240px); 
     user-select: none;
     cursor: pointer;
     border-style: dotted;
