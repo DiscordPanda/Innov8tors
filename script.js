@@ -14,6 +14,7 @@ function login() {
     LoginBubble.style.left = "0px";
 }
 
+// Beginning of ToDo.html file
 document.addEventListener('DOMContentLoaded', function () {
     const taskInput = document.getElementById('task-box');
     const addButton = document.querySelector('button[title="Add task"]');
