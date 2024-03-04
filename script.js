@@ -72,21 +72,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Notification Logic
+    audio1 = new Audio('https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3');
     function notifyTask(task, time) {
         // Convert time to milliseconds
         let notificationTime = 0;
         switch (time) {
             case '30m':
                 notificationTime = 30 * 60 * 1000;
+                audio1.play();
                 break;
             case '1h':
                 notificationTime = 60 * 60 * 1000;
+                audio1.play();
                 break;
             case '2h':
                 notificationTime = 2 * 60 * 60 * 1000;
+                audio1.play();
                 break;
             case '3h':
                 notificationTime = 3 * 60 * 60 * 1000;
+                audio1.play();
                 break;
             default:
                 return; // If time is 'none' or invalid, do not set notification
