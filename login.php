@@ -1,33 +1,41 @@
 <?php
-   define('DB_USER', 'bgrewal1');
-   define('DB_PASS', 'bgrewal1');
-   define('DB_NAME', 'bgrewal1');
-   define('DB_HOST', 'localhost');
-   
-   $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    if (!$conn) {
-      die("Connection failed: " . mysqli_connect_error());
+session_start(); 
+
+define('DB_USER', 'bgrewal1');
+define('DB_PASS', 'bgrewal1');
+define('DB_NAME', 'bgrewal1');
+define('DB_HOST', 'localhost');
+
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT id, username, password FROM innov8tors";
+$result = $conn->query($sql);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    while ($row = $result->fetch_assoc()) {
+        if ($username == $row['username'] && $password == $row['password']) {
+            $userid = $row['id'];
+
+            // Stores user info 
+            $_SESSION['userid'] = $userid;
+
+            header("Location: ToDo.php");
+            exit();
+        }
     }
-    $sql = "SELECT id, username, password FROM innov8tors";
-    $result = $conn->query($sql);
-    
-    if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-        $username = $_POST['username']; 
-        $password = $_POST['password']; 
-    
-    while($row = $result->fetch_assoc()) {
-     if ($username == $row['username'] && $password == $row['password']) {
-        $userid = $row['id'];
-        setcookie('userid', $userid, time() + (86400 * 30), "/");
-        header("Location: ToDo.php");
-        exit();
-     }
-     }
-     echo "Username and password are not correct.";
-    }
-    
-    mysqli_close($conn);    
-    ?>
+
+    echo "Username and password are not correct.";
+}
+
+mysqli_close($conn);
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
