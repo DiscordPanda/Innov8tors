@@ -44,9 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     }
 
     // Insert new user 
-    $insert_user_sql = "INSERT INTO innov8tors (username, password) VALUES ('$username', '$password')";
+    $confirmpass = $_POST['confirmpass'];
+    $email = $_POST['email'];
+    $fullname = $_POST['fullname'];
     
-    if ($conn->query($insert_user_sql) === TRUE) {
+    $insert_user_sql = "INSERT INTO innov8tors (email,confirmpass,fullname,username,password) VALUES ('$email','$confirmpass','$fullname','$username', '$password')";
+    
+     if ($conn->query($insert_user_sql) === TRUE) {
         
         $userid = $conn->insert_id;
         $_SESSION['userid'] = $userid;
@@ -70,6 +74,7 @@ mysqli_close($conn);
     <link rel="stylesheet" href="styles.css">
 </head>
 
+
 <body class="login-page">
     <div class="form-box">
         <div class="button-box">
@@ -84,7 +89,7 @@ mysqli_close($conn);
              <button type="submit" class="submit-button">Log In</button>
             </form>
 
-        <form id="register" class="input-fields" method="POST" action="">
+        <form id="register" class="input-fields" method="POST" action="ToDo.php">
             <input type="text" class="input-box" placeholder="Enter Full Name" name="fullname" required>
             <input type="email" class="input-box" placeholder="Enter Email" name="email" required>
             <input type="text" class="input-box" placeholder="Choose Username" name= "username" required>

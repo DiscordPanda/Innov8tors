@@ -7,7 +7,11 @@
         <link rel="stylesheet" type="text/css" href="styles.css" />
     </head>
     <header>
-    <h1 class="GroupName">Innov8tors</h1>
+        <img id = logo
+        src="./Images/logo3.jpg "  style="width: 150px; height:150px;" >
+        <img id = banner
+        src="./Images/banner.jpg "  style="width: 1000px; height:150px;" >
+    	
     </header>
         <!-- Attributes for links to other pages -->
         <div class="topnav"><!--Navigation bar style-->
@@ -30,57 +34,32 @@
         </div>
 
     <body>
-        
-    <?php
-    session_start(); 
-    if (!isset($_SESSION['userid'])) {
-    header("Location: ToDo.php");
-} else {
-    echo "Welcome User: {$_SESSION['userid']}<br>";
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
-    // Redirect to the registration page
-    header("Location: ToDo.php");
-    exit();
-}
-?>
-
-
         <!-- class "container" is the large white box on the page -->
         <div class="container">
             <!-- class "task" is the container -->
             <div class="task">
                 <h3>Tasks to be done:</h3>
                 <!-- class "input" is where the user inputs the task. It's the textbox -->
-                <div class="input">
-                    <input type="text" class="input-task" id="task-box" placeholder="Enter a task" title="Input task">
-                    <button title="Add task">Add Task</button>
-                    <button title="Clear task">Clear All Task</button>
-                    <select name="time" id="time" title="Select period of notifications for the task" required>
-                        <option hidden disabled selected value>Notify Every</object>
-                        <option disabled value>--Notify Every--</option>
-                        <option value="30m">30 minutes (URGENT)</option>
-                        <option value="1h">1 hour (Important)</option>
-                        <option value="2h">2 hours (Normal)</option>
-                        <option value="3h">3 hours (Not Important)</option>
-                        <option value="none">Do Not Notify (Forget about it)</option>
-                    </select>
-                    <!-- <select name="priority" id="priority" title="Select the priority of the task">
-                        <option hidden disabled selected value>Choose Priority</object>
-                        <option disabled value>--Choose Priority--</option>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select> -->
-                </div>
-                <!-- id "task-items" is the list of tasks that are added. checked class = completed. unchecked class = incomplete -->
+                <!-- <form> -->
+                    <div class="input">
+                        <input type="text" class="input-task" id="task-box" placeholder="Enter a task" title="Input task">
+                        <select name="time" id="time" title="Select period of notifications for the task" required>
+                            <option hidden disabled selected value>Notify Every</object>
+                            <option disabled value>--Notify Every--</option>
+                            <option value="30m">30 minutes (URGENT)</option>
+                            <option value="1h">1 hour (Important)</option>
+                            <option value="2h">2 hours (Normal)</option>
+                            <option value="3h">3 hours (Not Important)</option>
+                            <option value="none">Do Not Notify (Forget about it)</option>
+                        </select>
+                        <button title="Add task">Add Task</button>
+                        <button class="clear" title="Clear task">Clear All Task</button>
+                    </div>
                 <ul id="task-items">
                     <!-- These are example of completed and incomplete tasks -->
                     <li class="checked">Task 1</li>
                     <li class ="unchecked">Task 2</li>
                     <li class ="unchecked">Task 3</li>
-                    <!-- TODO:JavaScript Comes here -->
                 </ul>
             </div>
         </div>
