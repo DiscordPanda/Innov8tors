@@ -44,13 +44,11 @@
                     <div class="input">
                         <input type="text" class="input-task" id="task-box" placeholder="Enter a task" title="Input task">
                         <select name="time" id="time" title="Select period of notifications for the task" required>
-                            <option hidden disabled selected value>Notify Every</object>
-                            <option disabled value>--Notify Every--</option>
+                            <option selected value="none">Do Not Notify (Forget about it)</option>
                             <option value="30m">30 minutes (URGENT)</option>
                             <option value="1h">1 hour (Important)</option>
                             <option value="2h">2 hours (Normal)</option>
                             <option value="3h">3 hours (Not Important)</option>
-                            <option value="none">Do Not Notify (Forget about it)</option>
                         </select>
                         <button title="Add task">Add Task</button>
                         <button class="clear" title="Clear task">Clear All Task</button>
