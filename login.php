@@ -1,10 +1,19 @@
 <?php
 session_start(); 
 
-define('DB_USER', 'bgrewal1');
-define('DB_PASS', 'bgrewal1');
-define('DB_NAME', 'bgrewal1');
+// Remember to change to your own database
+define('DB_USER', 'nvu24');
+define('DB_PASS', 'nvu24');
+define('DB_NAME', 'nvu24');
 define('DB_HOST', 'localhost');
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+$confirm_password = $_POST['confirm'];
+$email = $_POST['email'];
+$fullname = $_POST['fullname'];
+$reg_user = $_POST['reg_username']; 
+$reg_pass = $_POST['reg_password'];
 
 $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if (!$conn) {
@@ -13,10 +22,9 @@ if (!$conn) {
 
 $sql = "SELECT id, username, password FROM innov8tors";
 $result = $conn->query($sql);
+// logging in
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['logging'])) {
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
 
     while ($row = $result->fetch_assoc()) {
         if ($username == $row['username'] && $password == $row['password']) {
@@ -32,32 +40,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     echo "Username and password are not correct.";
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
-    
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    
-    $confirm_password = $_POST['confirm'];
-    if ($password !== $confirm_password) {
-        echo "Passwords do not match.";
+// registering
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['registering'])) {
+
+    if (strcmp($reg_pass, $confirm_password) != 0) {
+        echo "Password does not match"; // TODO: This goes into a different page. Make it so that it shows a pop-up
         exit();
     }
+    $sql = "INSERT INTO innov8tors (email,confirmpass,fullname,username,password) VALUES ('$email','$confirm_password','$fullname','$reg_user', '$reg_pass')";
+    echo "Successfully added";
+
 
     // Insert new user 
     $confirmpass = $_POST['confirmpass'];
-    $email = $_POST['email'];
-    $fullname = $_POST['fullname'];
-    
-    $insert_user_sql = "INSERT INTO innov8tors (email,confirmpass,fullname,username,password) VALUES ('$email','$confirmpass','$fullname','$username', '$password')";
-    
-     if ($conn->query($insert_user_sql) === TRUE) {
-        
+
+
+    if ($conn->query($sql) === TRUE) {
+
         $userid = $conn->insert_id;
         $_SESSION['userid'] = $userid;
         header("Location: ToDo.php");
         exit();
     } else {
-        echo "Error: " . $insert_user_sql . "<br>" . $conn->error;
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
@@ -67,38 +72,38 @@ mysqli_close($conn);
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innov8tors</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Innov8tors</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
 
 
-<body class="login-page">
-    <div class="form-box">
-        <div class="button-box">
-            <div id="button-color"></div>
-                <button type="submit" class="toggle-btn" onclick="login()">Login</button>
-                <button type="submit" class="toggle-btn" onclick="register()">Register</button>
-        </div>
-        <form id="login" class="input-fields" method="POST" action="ToDo.php">
-            <input type="text" class="input-box" placeholder="Enter Username" name="username" required>
-             <input type="password" class="input-box" placeholder="Enter Password" name="password" required>
-             <input type="checkbox" class="check-box"><span class="remember">Remember Password</span>
-             <button type="submit" class="submit-button">Log In</button>
+    <body class="login-page">
+        <div class="form-box">
+            <div class="button-box">
+                <div id="button-color"></div>
+                    <button type="submit" class="toggle-btn" onclick="login()">Login</button>
+                    <button type="submit" class="toggle-btn" onclick="register()">Register</button>
+            </div>
+            <form id="login" class="input-fields" method="POST" action="">
+                <input type="text" class="input-box" placeholder="Enter Username" name="username" required>
+                <input type="password" class="input-box" placeholder="Enter Password" name="password" required>
+                <input type="checkbox" class="check-box"><span class="remember">Remember Password</span>
+                <button id="logging" name="logging" type="submit" class="submit-button">Log In</button>
             </form>
 
-        <form id="register" class="input-fields" method="POST" action="ToDo.php">
-            <input type="text" class="input-box" placeholder="Enter Full Name" name="fullname" required>
-            <input type="email" class="input-box" placeholder="Enter Email" name="email" required>
-            <input type="text" class="input-box" placeholder="Choose Username" name= "username" required>
-            <input type="text" class="input-box" placeholder="Enter Password" name= "password" required>
-            <input type="text" class="input-box" placeholder="Re-enter Password" name="confirm" required>
-            <input type="checkbox" class="check-box"><span class="remember">I agree to the terms & conditions</span>
-            <button type="submit" class="submit-button">Register</button>
-        </form>
-    </div>
-    <script src="script.js"></script>
-</body>
+            <form id="register" class="input-fields" method="POST" action="login.php">
+                <input id="fullname" name="fullname" type="text" class="input-box" placeholder="Enter Full Name" required>
+                <input id="email" name="email" type="email" class="input-box" placeholder="Enter Email" required>
+                <input id="reg_username" name="reg_username" type="text" class="input-box" placeholder="Choose Username" required>
+                <input id="reg_password" name="reg_password" type="text" class="input-box" placeholder="Enter Password" required>
+                <input id="confirm" name="confirm" type="text" class="input-box" placeholder="Re-enter Password" required>
+                <input type="checkbox" class="check-box"><span class="remember" required>I agree to the terms & conditions</span> <!-- TODO: Make this required, somehow this isnt required  -->
+                <button id="registering" name="registering" type="submit" class="submit-button">Register</button>
+            </form>
+        </div>
+        <script src="script.js"></script>
+    </body>
 </html>
