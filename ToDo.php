@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,6 +41,26 @@
         <!-- class "container" is the large white box on the page -->
         <div class="container">
             <!-- class "task" is the container -->
+            <!-- Adding welcome user ID in container -->
+            <?php
+            // Remember to change to your own database
+            define('DB_USER', 'bgrewal1');
+            define('DB_PASS', 'bgrewal1');
+            define('DB_NAME', 'bgrewal1');
+            define('DB_HOST', 'localhost');
+            
+            $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            if (!$conn) {
+                 die("Connection failed: " . mysqli_connect_error());
+                }
+                
+                if (isset($_SESSION['userid'])) {
+                    echo "Welcome User: " . $_SESSION['userid'];
+                } else {
+                      echo "Userid not found in session";
+                    }
+                    ?>
+
             <div class="task">
                 <h3>Tasks to be done:</h3>
                 <!-- class "input" is where the user inputs the task. It's the textbox -->
