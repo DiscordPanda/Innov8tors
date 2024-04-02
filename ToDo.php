@@ -1,3 +1,19 @@
+<?php
+session_start();
+ 
+// Remember to change to your own database
+  define('DB_USER', 'bgrewal1');
+  define('DB_PASS', 'bgrewal1');
+  define('DB_NAME', 'bgrewal1');
+  define('DB_HOST', 'localhost');
+  
+  $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+  if (!$conn) {
+       die("Connection failed: " . mysqli_connect_error());
+      }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,7 +23,11 @@
         <link rel="stylesheet" type="text/css" href="styles.css" />
     </head>
     <header>
-    <h1 class="GroupName">Innov8tors</h1>
+        <img id = logo
+        src="./Images/logo.jpg "  style="width: 150px; height:150px;" >
+        <img id = banner
+        src="./Images/banner.jpg "  style="width: 1000px; height:150px;" >
+    	
     </header>
         <!-- Attributes for links to other pages -->
         <div class="topnav"><!--Navigation bar style-->
@@ -30,50 +50,61 @@
         </div>
 
     <body>
-    <?php
-    session_start(); 
-    if (!isset($_SESSION['userid'])) {
-    header("Location: ToDo.php");
-} else {
-    echo "Welcome User: {$_SESSION['userid']}<br>";
-}
-?>
-
-
         <!-- class "container" is the large white box on the page -->
         <div class="container">
             <!-- class "task" is the container -->
+            <!-- Adding welcome user ID in container -->
+            <?php      
+                if (isset($_SESSION['userid'])) {
+                    echo "Welcome User: " . $_SESSION['userid'];
+                } else {
+                      echo "Userid not found in session";
+                    }
+                    ?>
             <div class="task">
                 <h3>Tasks to be done:</h3>
                 <!-- class "input" is where the user inputs the task. It's the textbox -->
+                <!-- <form> -->
                 <div class="input">
-                    <input type="text" class="input-task" id="task-box" placeholder="Enter a task" title="Input task">
-                    <button title="Add task">Add Task</button>
-                    <button title="Clear task">Clear All Task</button>
-                    <select name="time" id="time" title="Select period of notifications for the task" required>
-                        <option hidden disabled selected value>Notify Every</object>
-                        <option disabled value>--Notify Every--</option>
-                        <option value="30m">30 minutes (URGENT)</option>
-                        <option value="1h">1 hour (Important)</option>
-                        <option value="2h">2 hours (Normal)</option>
-                        <option value="3h">3 hours (Not Important)</option>
-                        <option value="none">Do Not Notify (Forget about it)</option>
-                    </select>
-                    <!-- <select name="priority" id="priority" title="Select the priority of the task">
-                        <option hidden disabled selected value>Choose Priority</object>
-                        <option disabled value>--Choose Priority--</option>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select> -->
-                </div>
-                <!-- id "task-items" is the list of tasks that are added. checked class = completed. unchecked class = incomplete -->
+                    <form method="post" action="">
+                        <input type="text" class="input-task" name="taskDescription" placeholder="Enter a task" title="Input task">
+                        <select name="time" id="time" title="Select period of notifications for the task" required>
+                            <option selected value="none">Do Not Notify (Forget about it)</option>
+                            <option value="30m">30 minutes (URGENT)</option>
+                            <option value="1h">1 hour (Important)</option>
+                            <option value="2h">2 hours (Normal)</option>
+                            <option value="3h">3 hours (Not Important)</option>
+                        </select>
+                        <button type="submit" name="submitTask">Add Task</button>
+                        <button type="clear" name="Clear task">Clear All Task</button>
+                    </form>
+                    <?php
+                    if(isset($_POST['submitTask'])) {
+
+                    $taskDescription = $_POST['taskDescription'];
+                        $sql = "INSERT INTO tasks (description, done, reminder) VALUES ('$taskDescription', 0, 0)";
+                        if (mysqli_query($conn, $sql)) {
+                            $result = mysqli_query($conn, "SELECT * FROM tasks");
+                            if(mysqli_num_rows($result) > 0) {
+                                echo "<ul>";
+                                while($row = mysqli_fetch_assoc($result)) {
+                                    echo "<li>" . $row['description'] . "</li>";
+                                }
+                                echo "</ul>";
+                            } else {
+                                echo "No tasks available.";
+                            }
+                        } else {
+                            echo "Error inserting task: " . mysqli_error($conn);
+                        }
+                    }
+                        ?>                 
+                    </div>
                 <ul id="task-items">
                     <!-- These are example of completed and incomplete tasks -->
                     <li class="checked">Task 1</li>
                     <li class ="unchecked">Task 2</li>
                     <li class ="unchecked">Task 3</li>
-                    <!-- TODO:JavaScript Comes here -->
                 </ul>
             </div>
         </div>
