@@ -78,7 +78,6 @@ session_start();
                         </form>
                         <?php
                             if(isset($_POST['submitTask'])) {
-                                // echo "inside submitTask";
                                 $taskDescription = $_POST['taskDescription'];
                                 $userID = $_SESSION['userID'];
                                 
