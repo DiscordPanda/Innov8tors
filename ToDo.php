@@ -7,9 +7,9 @@ session_start();
     define('DB_HOST', 'localhost');
     
     $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
 ?>
 
@@ -64,7 +64,7 @@ session_start();
                 <!-- class "input" is where the user inputs the task. It's the textbox -->
                 <!-- <form> -->
                     <div class="input">
-                        <form method="POST" action="ToDo.php"> <!--Error Here -->
+                        <form id = "tasks" method="POST" action="ToDo.php"> <!--Error Here -->
                             <input type="text" id="input-task" class="input-task" name="taskDescription" placeholder="Enter a task" title="Input task" required>
                             <select name="time" id="time" title="Select period of notifications for the task" required>
                                 <option selected value="none">Do Not Notify (Forget about it)</option>
@@ -77,11 +77,12 @@ session_start();
                             <button type="clear" id="clearTask" name="clearTask">Clear All Task</button>
                         </form>
                         <?php
-                            if(isset($_POST['submitTask'])) {
+                            if(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST['submitTask']))) {
                                 $taskDescription = $_POST['taskDescription'];
                                 $userID = $_SESSION['userID'];
+
                                 
-                                $sql = "INSERT INTO tasks (description, userid) VALUES ('$taskDescription', '$userID')";
+                                $sql = "INSERT INTO `tasks` (`taskid`, `userid`, `description`, `done`, `reminder`) VALUES (NULL, '$userID' , '$taskDescription', NULL, NULL)";
                                 if (mysqli_query($conn, $sql)) { // Prints the all the tasks in the db
                                     $result = mysqli_query($conn, "SELECT * FROM tasks");
                                     echo "Successfully added";
