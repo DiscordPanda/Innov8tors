@@ -1,16 +1,16 @@
 <?php
 session_start();
- 
 // Remember to change to your own database
-  define('DB_USER', 'bgrewal1');
-  define('DB_PASS', 'bgrewal1');
-  define('DB_NAME', 'bgrewal1');
-  define('DB_HOST', 'localhost');
-  
-  $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-  if (!$conn) {
-       die("Connection failed: " . mysqli_connect_error());
-      }
+    define('DB_USER', 'nvu24');
+    define('DB_PASS', 'nvu24');
+    define('DB_NAME', 'nvu24');
+    define('DB_HOST', 'localhost');
+    
+    $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +26,6 @@ session_start();
         src="./Images/logo3.jpg "  style="width: 150px; height:150px;" >
         <img id = banner
         src="./Images/banner.jpg "  style="width: 1000px; height:150px;" >
-    	
     </header>
         <!-- Attributes for links to other pages -->
         <div class="topnav"><!--Navigation bar style-->
@@ -51,30 +50,58 @@ session_start();
     <body>
         <!-- class "container" is the large white box on the page -->
         <div class="container">
-            <!-- class "task" is the container -->
-            <!-- Adding welcome user ID in container -->
             <?php      
                 if (isset($_SESSION['userid'])) {
                     echo "Welcome User: " . $_SESSION['userid'];
-                } else {
-                      echo "Userid not found in session";
-                    }
-                    ?>
+                } 
+                else {
+                    echo "Userid not found in session";
+                }
+            ?>
+            <!-- class "task" is the container -->
             <div class="task">
                 <h3>Tasks to be done:</h3>
                 <!-- class "input" is where the user inputs the task. It's the textbox -->
                 <!-- <form> -->
                     <div class="input">
-                        <input type="text" class="input-task" id="task-box" placeholder="Enter a task" title="Input task">
-                        <select name="time" id="time" title="Select period of notifications for the task" required>
-                            <option selected value="none">Do Not Notify (Forget about it)</option>
-                            <option value="30m">30 minutes (URGENT)</option>
-                            <option value="1h">1 hour (Important)</option>
-                            <option value="2h">2 hours (Normal)</option>
-                            <option value="3h">3 hours (Not Important)</option>
-                        </select>
-                        <button title="Add task">Add Task</button>
-                        <button class="clear" title="Clear task">Clear All Task</button>
+                        <form method="POST" action="ToDo.php"> <!--Error Here -->
+                            <input type="text" id="input-task" class="input-task" name="taskDescription" placeholder="Enter a task" title="Input task" required>
+                            <select name="time" id="time" title="Select period of notifications for the task" required>
+                                <option selected value="none">Do Not Notify (Forget about it)</option>
+                                <option value="30m">30 minutes (URGENT)</option>
+                                <option value="1h">1 hour (Important)</option>
+                                <option value="2h">2 hours (Normal)</option>
+                                <option value="3h">3 hours (Not Important)</option>
+                            </select>
+                            <button type="submit" id="submitTask" name="submitTask">Add Task</button>
+                            <button type="clear" id="clearTask" name="clearTask">Clear All Task</button>
+                        </form>
+                        <?php
+                            if(isset($_POST['submitTask'])) {
+                                // echo "inside submitTask";
+                                $taskDescription = $_POST['taskDescription'];
+                                $userID = $_SESSION['userID'];
+                                
+                                $sql = "INSERT INTO tasks (description, userid) VALUES ('$taskDescription', '$userID')";
+                                if (mysqli_query($conn, $sql)) { // Prints the all the tasks in the db
+                                    $result = mysqli_query($conn, "SELECT * FROM tasks");
+                                    echo "Successfully added";
+                                    if(mysqli_num_rows($result) > 0) {
+                                        echo "<ul>";
+                                        while($row = mysqli_fetch_assoc($result)) {
+                                            echo "<li>" . $row['description'] . "</li>";
+                                        }
+                                        echo "</ul>";
+                                    } 
+                                    else {
+                                        echo "No tasks available.";
+                                    }
+                                } 
+                                else {
+                                    echo "Error inserting task: " . mysqli_error($conn);
+                                }
+                            }
+                        ?>
                     </div>
                 <ul id="task-items">
                     <!-- These are example of completed and incomplete tasks -->
@@ -84,7 +111,7 @@ session_start();
                 </ul>
             </div>
         </div>
-        <script src="script.js"></script>
+        <script src="script2.js"></script>
     </body>
     <footer>
         <p>&copy; 2024 Innov8tors, All Rights Reserved</p>

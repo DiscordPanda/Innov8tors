@@ -2,9 +2,9 @@
 session_start(); 
 
 // Remember to change to your own database
-define('DB_USER', 'bgrewal1');
-define('DB_PASS', 'bgrewal1');
-define('DB_NAME', 'bgrewal1');
+define('DB_USER', 'nvu24');
+define('DB_PASS', 'nvu24');
+define('DB_NAME', 'nvu24');
 define('DB_HOST', 'localhost');
 
 $username = $_POST['username'];
@@ -37,13 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['logging'])) {
             exit();
         }
     }
-    echo "<script>alert('Username and password are not correct.');</script>";
+
+    echo "Username and password are not correct.";
 }
 // registering
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['registering'])) {
 
     if (strcmp($reg_pass, $confirm_password) != 0) {
-        echo "<script>alert('Password does not match'); window.location.href = 'login.php' </script>"; // pop up alert & redirects to login.php
+        echo "Password does not match"; // TODO: This goes into a different page. Make it so that it shows a pop-up
         exit();
     }
     $sql = "INSERT INTO innov8tors (email,confirmpass,fullname,username,password) VALUES ('$email','$confirm_password','$fullname','$reg_user', '$reg_pass')";
