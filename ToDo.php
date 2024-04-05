@@ -1,12 +1,12 @@
 <?php
-    session_start();
-    // Remember to change to your own database
-        define('DB_USER', 'nvu24');
-        define('DB_PASS', 'nvu24');
-        define('DB_NAME', 'nvu24');
-        define('DB_HOST', 'localhost');
-        
-        $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+session_start();
+ // Remember to change to your own database
+  define('DB_USER', 'bgrewal1');
+  define('DB_PASS', 'bgrewal1');
+  define('DB_NAME', 'bgrewal1');
+  define('DB_HOST', 'localhost');
+  
+  $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
@@ -111,7 +111,7 @@
                             $sql = "DELETE FROM tasks WHERE userid = $userID";
 
                             if (($_SERVER["REQUEST_METHOD"] == "POST") && (mysqli_query($conn, $sql))) {
-                                // alert("All tasks deleted successfully"); Do this in js
+                                echo "<script>alert('All tasks deleted successfully'); window.location.href = 'ToDo.php' </script>"; // pop up alert & redirects to ToDO.php
                             } else {
                                 echo "Error deleting tasks: " . mysqli_error($conn) . "<br>";
                             }
@@ -120,7 +120,7 @@
                 </ul>
             </div>
         </div>
-        <script src="script3.js"></script> <!--To use the javascript, we CANNOT run more than 1 addEventListeners in the JS file-->
+        <script src="script2.js"></script> <!--To use the javascript, we CANNOT run more than 1 addEventListeners in the JS file-->
     </body>
     <footer>
         <p>&copy; 2024 Innov8tors, All Rights Reserved</p>
