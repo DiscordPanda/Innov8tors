@@ -65,7 +65,7 @@ if (!$conn) {
                 <!-- <form> -->
                     <div class="input">
                         <form id = "tasks" method="POST" action="ToDo.php"> <!--Error Here -->
-                            <input type="text" id="input-task" class="input-task" name="taskDescription" placeholder="Enter a task" title="Input task" required>
+                            <input type="text" id="input-task" class="input-task" name="taskDescription" placeholder="Enter a task" title="Input task">
                             <select name="time" id="time" title="Select period of notifications for the task" required>
                                 <option selected value="none">Do Not Notify (Forget about it)</option>
                                 <option value="30m">30 minutes (URGENT)</option>
@@ -73,25 +73,28 @@ if (!$conn) {
                                 <option value="2h">2 hours (Normal)</option>
                                 <option value="3h">3 hours (Not Important)</option>
                             </select>
-                            <button type="submit" id="submitTask" name="submitTask">Add Task</button>
+                            <button id="submitTask" name="submitTask" type="submit">Add Task</button>
                             <button type="clear" id="clearTask" name="clearTask">Clear All Task</button>
                         </form>
-                        <?php
-                            if(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST['submitTask']))) {
-                                $taskDescription = $_POST['taskDescription'];
-                                $userID = $_SESSION['userID'];
-
+                        <?php 
+                            echo "Request_Method" . $_SERVER["REQUEST_METHOD"];
+                            $taskDescription = $_POST['taskDescription'];
+                            $userID = $_SESSION['userid'];
+                            if(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST['submitTask'])) && ($_POST['taskDescription'] !== "")) {
+                                echo " inside first if statement";
                                 
-                                $sql = "INSERT INTO `tasks` (`taskid`, `userid`, `description`, `done`, `reminder`) VALUES (NULL, '$userID' , '$taskDescription', NULL, NULL)";
+                                $sql = "INSERT INTO tasks (description, userid) VALUES ('$taskDescription', '$userID')"; 
+                            
                                 if (mysqli_query($conn, $sql)) { // Prints the all the tasks in the db
                                     $result = mysqli_query($conn, "SELECT * FROM tasks");
-                                    echo "Successfully added";
+                                    echo " Successfully added";
                                     if(mysqli_num_rows($result) > 0) {
                                         echo "<ul>";
                                         while($row = mysqli_fetch_assoc($result)) {
                                             echo "<li>" . $row['description'] . "</li>";
                                         }
                                         echo "</ul>";
+                                        echo " Successfully done";
                                     } 
                                     else {
                                         echo "No tasks available.";
@@ -100,7 +103,16 @@ if (!$conn) {
                                 else {
                                     echo "Error inserting task: " . mysqli_error($conn);
                                 }
+                                echo "outside of all first set of if statements";
                             }
+                            else if(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST['clearTask']))) { # SQL command does not work. The code reaches here, but sql code seems wrong?
+                                echo " We are in the second if statement now";
+                                // SQL query to delete data with the specific ID
+                                $sql = "DELETE FROM tasks WHERE userid == $userID";
+                                echo " second statement done";
+                                
+                            }
+                            
                         ?>
                     </div>
                 <ul id="task-items">
@@ -111,7 +123,7 @@ if (!$conn) {
                 </ul>
             </div>
         </div>
-        <script src="script2.js"></script>
+        <script src="script3.js"></script> <!--To use the javascript, we CANNOT run more than 1 addEventListeners in the JS file-->
     </body>
     <footer>
         <p>&copy; 2024 Innov8tors, All Rights Reserved</p>
