@@ -22,7 +22,7 @@ session_start();
     </head>
     <header>
         <img id = logo
-        src="./Images/logo3.jpg "  style="width: 150px; height:150px;" >
+        src="./Images/logo.jpg "  style="width: 150px; height:150px;" >
         <img id = banner
         src="./Images/banner.jpg "  style="width: 1000px; height:150px;" >
     </header>
