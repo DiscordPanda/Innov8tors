@@ -1,15 +1,17 @@
 <?php
 session_start();
  // Remember to change to your own database
-  define('DB_USER', 'bgrewal1');
-  define('DB_PASS', 'bgrewal1');
-  define('DB_NAME', 'bgrewal1');
-  define('DB_HOST', 'localhost');
-  
-  $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    define('DB_USER', 'nvu24');
+    define('DB_PASS', 'nvu24');
+    define('DB_NAME', 'nvu24');
+    define('DB_HOST', 'localhost');
+    
+    $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +32,9 @@ session_start();
         <div class="topnav"><!--Navigation bar style-->
             <nav>
                 <div class="navbar">
+                    <a class="log-out" href="login.php" target="_blank" title="Log out of the application">
+                        Log Out
+                    </a>
                     <a class="header-links" href="https://icollege.gsu.edu/" target="_blank" title="Open up GSU's iCollege website">
                         iCollege(GSU)
                     </a>
@@ -45,7 +50,6 @@ session_start();
                 </div> 
             </nav>
         </div>
-
     <body>
         <!-- class "container" is the large white box on the page -->
         <div class="container">
@@ -61,66 +65,80 @@ session_start();
             <div class="task">
                 <h3>Tasks to be done:</h3>
                 <!-- class "input" is where the user inputs the task. It's the textbox -->
-                <!-- <form> -->
                     <div class="input">
-                        <form id = "tasks" method="POST" action="ToDo.php"> <!--Error Here -->
+                        <form id = "tasks" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <input type="text" id="input-task" class="input-task" name="taskDescription" placeholder="Enter a task" title="Input task">
                             <select name="time" id="time" title="Select period of notifications for the task" required>
-                                <option selected value="none">Do Not Notify (Forget about it)</option>
-                                <option value="demo">30 seconds (Demo)</option> <!-- TODO: add this into the notification list in js -->
-                                <option value="30m">30 minutes (URGENT)</option>
-                                <option value="1h">1 hour (Important)</option>
-                                <option value="2h">2 hours (Normal)</option>
-                                <option value="3h">3 hours (Not Important)</option>
+                                <option selected value="0">Do Not Notify (Forget about it)</option>
+                                <option value="5s">5 seconds (testing)</option>
+                                <option value="30s">30 seconds (Demo)</option> <!-- TODO: add this into the notification list in js -->
+                                <option value="1800">30 minutes (URGENT)</option>
+                                <option value="3600">1 hour (Important)</option>
+                                <option value="7200">2 hours (Normal)</option>
+                                <option value="10800">3 hours (Not Important)</option>
                             </select>
                             <button id="submitTask" name="submitTask" type="submit">Add Task</button>
                             <button type="clear" id="clearTask" name="clearTask">Clear All Task</button>
                         </form>
                     </div>
                 <ul id="task-items">
-                    <?php 
-                        // echo "Request_Method" . $_SERVER["REQUEST_METHOD"];
-                        $taskDescription = $_POST['taskDescription'];
-                        $userID = $_SESSION['userid'];
-                        if(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST['submitTask']))) {
-                            // echo " inside first if statement";
-                            if ($_POST['taskDescription'] !== ""){
-                                $sql = "INSERT INTO tasks (description, userid) VALUES ('$taskDescription', '$userID')"; 
-                            }
-                            if (mysqli_query($conn, $sql)) { // Prints the all the tasks in the db
-                                $result = mysqli_query($conn, "SELECT * FROM tasks WHERE userid = $userID");
-                                // echo " Successfully added";
-                                if(mysqli_num_rows($result) > 0) {
-                                    echo "<ul>";
-                                    while($row = mysqli_fetch_assoc($result)) {
-                                        echo "<li>" . $row['description'] . "</li>";
+                        <?php
+                            $taskDescription = $_POST['taskDescription'];
+                            $userID = $_SESSION['userid'];
+                            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submitTask'])) {
+                                if ($taskDescription !== "") {
+                                    $sql = "INSERT INTO tasks (description, userid) VALUES ('$taskDescription', '$userID')"; 
+                                    if (mysqli_query($conn, $sql)) {
+                                        $result = mysqli_query($conn, "SELECT * FROM tasks WHERE userid = $userID ORDER BY taskid DESC"); # Tasks are now added to the top of the list instead of the bottom
+                                        if (mysqli_num_rows($result) > 0) { # TODO: We need to create a form here to retrieve REQUEST_METHOD
+                                            // echo "<form id='task-list' method='POST' action='".$_SERVER['PHP_SELF']."'>";
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    $isChecked = $row['done'] == 1 ? 'checked' : '';
+                                                    echo "<li class='$isChecked'>" . $row['description'] . " <button class='delete-button' name='deleteTask' type='submit'>X</button></li>";
+                                                }
+                                            // echo "</form>";
+                                        } 
                                     }
-                                    echo "</ul>";
-                                    // echo " Successfully done";
+                                    else {
+                                        echo "Error inserting task: " . mysqli_error($conn);
+                                    }
+                                }
+                                else if ($taskDescription == ""){
+                                    echo "Please enter a task";
+                                }
+                            }
+                            else if (isset($_POST['clearTask'])) {
+                                $sql = "DELETE FROM tasks WHERE userid = $userID";
+                                if (mysqli_query($conn, $sql)) {
+                                    echo "<script>alert('All tasks deleted successfully'); window.location.href = 'ToDo.php' </script>";
                                 } 
                                 else {
-                                    // echo "No tasks available.";
+                                    echo "Error deleting tasks: " . mysqli_error($conn) . "<br>";
                                 }
-                            } 
-                            else {
-                                echo "Error inserting task: " . mysqli_error($conn);
                             }
-                            // echo "outside of all first set of if statements";
-                        }
-                        else if (isset($_POST['clearTask'])) {
-                            $sql = "DELETE FROM tasks WHERE userid = $userID";
-
-                            if (($_SERVER["REQUEST_METHOD"] == "POST") && (mysqli_query($conn, $sql))) {
-                                echo "<script>alert('All tasks deleted successfully'); window.location.href = 'ToDo.php' </script>"; // pop up alert & redirects to ToDO.php
-                            } else {
-                                echo "Error deleting tasks: " . mysqli_error($conn) . "<br>";
+                            else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteTask'])) {
+                                $taskId = $_POST['taskId'];
+                                // $userID = $_SESSION['userid'];
+                                $sql = "DELETE FROM tasks WHERE id = $taskId AND userid = $userID";
+                                if (mysqli_query($conn, $sql)) {
+                                    echo "Task deleted successfully";
+                                } 
+                                else {
+                                    echo "Error deleting task: " . mysqli_error($conn);
+                                }
                             }
-                        }
-                    ?>
+                            echo "request method: " . $_SERVER['REQUEST_METHOD'];
+                            if(isset($_POST['deleteTask'])){
+                                echo "POST deleteTask: True";
+                            }
+                            else{
+                                echo "POST deleteTask: False";
+                            }
+                        ?>
                 </ul>
             </div>
         </div>
-        <script src="script2.js"></script> <!--To use the javascript, we CANNOT run more than 1 addEventListeners in the JS file-->
+        <script src="script3.js"></script> <!--To use the javascript, we CANNOT run more than 1 addEventListeners in the JS file-->
     </body>
     <footer>
         <p>&copy; 2024 Innov8tors, All Rights Reserved</p>
