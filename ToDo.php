@@ -86,17 +86,15 @@ session_start();
                             $taskDescription = $_POST['taskDescription'];
                             $userID = $_SESSION['userid'];
                             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submitTask'])) {
-                                if ($taskDescription !== "") {
+                                if ($taskDescription !== "") { # Does not add empty task description
                                     $sql = "INSERT INTO tasks (description, userid) VALUES ('$taskDescription', '$userID')"; 
                                     if (mysqli_query($conn, $sql)) {
                                         $result = mysqli_query($conn, "SELECT * FROM tasks WHERE userid = $userID ORDER BY taskid DESC"); # Tasks are now added to the top of the list instead of the bottom
                                         if (mysqli_num_rows($result) > 0) { # TODO: We need to create a form here to retrieve REQUEST_METHOD
-                                            // echo "<form id='task-list' method='POST' action='".$_SERVER['PHP_SELF']."'>";
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                while ($row = mysqli_fetch_assoc($result)) { # Creates a li element with a class and a name and to add the "X" button at the end of task description
                                                     $isChecked = $row['done'] == 1 ? 'checked' : '';
                                                     echo "<li class='$isChecked'>" . $row['description'] . " <button class='delete-button' name='deleteTask' type='submit'>X</button></li>";
                                                 }
-                                            // echo "</form>";
                                         } 
                                     }
                                     else {
@@ -107,7 +105,7 @@ session_start();
                                     echo "Please enter a task";
                                 }
                             }
-                            else if (isset($_POST['clearTask'])) {
+                            else if (isset($_POST['clearTask'])) { # Clear all tasks from database
                                 $sql = "DELETE FROM tasks WHERE userid = $userID";
                                 if (mysqli_query($conn, $sql)) {
                                     echo "<script>alert('All tasks deleted successfully'); window.location.href = 'ToDo.php' </script>";
@@ -116,7 +114,7 @@ session_start();
                                     echo "Error deleting tasks: " . mysqli_error($conn) . "<br>";
                                 }
                             }
-                            else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteTask'])) {
+                            else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteTask'])) { # TODO: Remove individual task in the list.
                                 $taskId = $_POST['taskId'];
                                 // $userID = $_SESSION['userid'];
                                 $sql = "DELETE FROM tasks WHERE id = $taskId AND userid = $userID";
