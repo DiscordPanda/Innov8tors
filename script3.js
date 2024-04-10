@@ -9,32 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Object to store timer IDs for each task
     const timers = {};
 
-    addButton.addEventListener('click', addTask);
-
-    // Delete Task and Stop Timer
-    taskList.addEventListener('click', function (e) {
-        if (e.target.classList.contains('delete-button')) {
-            const taskItem = e.target.parentElement;
-            const taskId = taskItem.dataset.taskId;
-            clearTimeout(timers[taskId]);
-            taskItem.remove();
-            delete timers[taskId];
-        } else if (e.target.tagName === 'LI') {
-            const taskItem = e.target;
-            const taskId = taskItem.dataset.taskId;
-            taskItem.classList.toggle('checked');
-            // Pause or resume timer based on task checked status
-            if (taskItem.classList.contains('checked')) {
-                clearTimeout(timers[taskId]);
-            } else {
-                const taskText = taskItem.textContent.trim();
-                const timeValue = timeSelect.value;
-                startTimer(taskText, timeValue, taskId);
-            }
-        }
-    });
-});
-    // // Add Task
     // addButton.addEventListener('click', addTask);
 
     // // Delete Task and Stop Timer
@@ -59,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //         }
     //     }
     // });
-
+});
 
     // Notification Logic
     audio1 = new Audio('https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3');
