@@ -9,6 +9,31 @@ document.addEventListener('DOMContentLoaded', function () {
     // Object to store timer IDs for each task
     const timers = {};
 
+    addButton.addEventListener('click', addTask);
+
+    // Delete Task and Stop Timer
+    taskList.addEventListener('click', function (e) {
+        if (e.target.classList.contains('delete-button')) {
+            const taskItem = e.target.parentElement;
+            const taskId = taskItem.dataset.taskId;
+            clearTimeout(timers[taskId]);
+            taskItem.remove();
+            delete timers[taskId];
+        } else if (e.target.tagName === 'LI') {
+            const taskItem = e.target;
+            const taskId = taskItem.dataset.taskId;
+            taskItem.classList.toggle('checked');
+            // Pause or resume timer based on task checked status
+            if (taskItem.classList.contains('checked')) {
+                clearTimeout(timers[taskId]);
+            } else {
+                const taskText = taskItem.textContent.trim();
+                const timeValue = timeSelect.value;
+                startTimer(taskText, timeValue, taskId);
+            }
+        }
+    });
+});
     // // Add Task
     // addButton.addEventListener('click', addTask);
 
@@ -32,8 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
     //             const timeValue = timeSelect.value;
     //             startTimer(taskText, timeValue, taskId);
     //         }
-        // }
-    });
+    //     }
+    // });
+
 
     // Notification Logic
     audio1 = new Audio('https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3');
@@ -41,19 +67,29 @@ document.addEventListener('DOMContentLoaded', function () {
         // Convert time to milliseconds
         let notificationTime = 0;
         switch (time) {
-            case '30m':
+            case '5s':
+                notificationTime = 5 * 1000;
+                audio1.play();
+                alert("5s passed");
+                break;
+            case '30s':
+                notificationTime = 30 * 1000;
+                audio1.play();
+                alert("30s passed");
+                break;
+            case '1800':
                 notificationTime = 30 * 60 * 1000;
                 audio1.play();
                 break;
-            case '1h':
+            case '3600':
                 notificationTime = 60 * 60 * 1000;
                 audio1.play();
                 break;
-            case '2h':
+            case '7200':
                 notificationTime = 2 * 60 * 60 * 1000;
                 audio1.play();
                 break;
-            case '3h':
+            case '10800':
                 notificationTime = 3 * 60 * 60 * 1000;
                 audio1.play();
                 break;
