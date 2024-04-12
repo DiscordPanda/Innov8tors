@@ -85,21 +85,21 @@ session_start();
                         <?php
                             $taskDescription = $_POST['taskDescription'];
                             $userID = $_SESSION['userid'];
+
+                            
+                            if(isset($_GET['taskid'])){
+                                $del_id = $_GET['taskid'];
+                                $delete = mysqli_query($conn, "DELETE FROM tasks WHERE taskid = $del_id AND userid = $userID");
+                                header('location: ToDo.php');
+                                exit();
+                            }
                             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submitTask'])) {
                                 if ($taskDescription !== "") { # Does not add empty task description
-                                    $sql = "INSERT INTO tasks (description, userid) VALUES ('$taskDescription', '$userID')"; 
-                                    if (mysqli_query($conn, $sql)) {
-                                        $result = mysqli_query($conn, "SELECT * FROM tasks WHERE userid = $userID ORDER BY taskid DESC"); # Tasks are now added to the top of the list instead of the bottom
-                                        if (mysqli_num_rows($result) > 0) { # TODO: We need to create a form here to retrieve REQUEST_METHOD
-                                                while ($row = mysqli_fetch_assoc($result)) { # Creates a li element with a class and a name and to add the "X" button at the end of task description
-                                                    $isChecked = $row['done'] == 1 ? 'checked' : '';
-                                                    echo "<li class='$isChecked'>" . $row['description'] . " <button class='delete-button' name='deleteTask' type='submit'>X</button></li>";
-                                                }
-                                        } 
-                                    }
-                                    else {
-                                        echo "Error inserting task: " . mysqli_error($conn);
-                                    }
+                                    $sql = "INSERT INTO tasks (description, userid) VALUES ('$taskDescription', '$userID')";
+                                    mysqli_query($conn, $sql);
+                                    header('location: ToDo.php');
+                                    exit();
+
                                 }
                                 else if ($taskDescription == ""){
                                     echo "Please enter a task";
@@ -114,29 +114,26 @@ session_start();
                                     echo "Error deleting tasks: " . mysqli_error($conn) . "<br>";
                                 }
                             }
-                            else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteTask'])) { # TODO: Remove individual task in the list.
-                                $taskId = $_POST['taskId'];
-                                // $userID = $_SESSION['userid'];
-                                $sql = "DELETE FROM tasks WHERE id = $taskId AND userid = $userID";
-                                if (mysqli_query($conn, $sql)) {
-                                    echo "Task deleted successfully";
-                                } 
-                                else {
-                                    echo "Error deleting task: " . mysqli_error($conn);
+                            $load_sql = "SELECT * FROM tasks WHERE userid = $userID";
+                            if (mysqli_query($conn, $load_sql)) {
+                                        
+                                $result = mysqli_query($conn, "SELECT * FROM tasks WHERE userid = $userID ORDER BY taskid DESC"); # Tasks are now added to the top of the list instead of the bottom
+                                if (mysqli_num_rows($result) > 0) { # TODO: We need to create a form here to retrieve REQUEST_METHOD
+                                    while ($row = mysqli_fetch_assoc($result)) { # Creates a li element with a class and a name and to add the "X" button at the end of task description
+                                        $isChecked = $row['done'] == 1 ? 'checked' : 'notchecked'; # could add this to css to "check"
+                                        echo "<li class='$isChecked'>" . $row['description'] . "<a href='ToDo.php?taskid=".$row['taskid']."' class='delete-button' >X</a></li>";
+                                    }
                                 }
                             }
-                            echo "request method: " . $_SERVER['REQUEST_METHOD'];
-                            if(isset($_POST['deleteTask'])){
-                                echo "POST deleteTask: True";
+                            else {
+                                echo "Error inserting task: " . mysqli_error($conn);
                             }
-                            else{
-                                echo "POST deleteTask: False";
-                            }
+                            // header('location: ToDo.php');
                         ?>
                 </ul>
             </div>
         </div>
-        <script src="script3.js"></script> <!--To use the javascript, we CANNOT run more than 1 addEventListeners in the JS file-->
+        <script src="script3.js"></script> <!--To use the javascript, we CANNOT run more than 1 addEventListeners in the JS file-->`
     </body>
     <footer>
         <p>&copy; 2024 Innov8tors, All Rights Reserved</p>
