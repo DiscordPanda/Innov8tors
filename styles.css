@@ -280,3 +280,6 @@ ul li button.delete-button:hover {
     color: red;
 }
 
+.checked{
+    text-decoration: line-through;
+}
