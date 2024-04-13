@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
     // Notification Logic
-    audio1 = new Audio('https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3');
+    audio1 = new Audio('https://commondatastorage.googleapis.com/codeskulptor-assets/week7-brrring.m4a');
     function notifyTask(task, time) {
         // Convert time to milliseconds
         let notificationTime = 0;
