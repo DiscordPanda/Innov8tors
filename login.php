@@ -75,11 +75,14 @@ mysqli_close($conn);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Innov8tors</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="style1.css">
     </head>
 
 
     <body class="login-page">
+    <div class="logo-container">
+        <img src="./Images/logo4.png" alt="Innov8tors Logo" class="logo">
+    </div>
         <div class="form-box">
             <div class="button-box">
                 <div id="button-color"></div>
@@ -87,19 +90,21 @@ mysqli_close($conn);
                     <button type="submit" class="toggle-btn" onclick="register()">Register</button>
             </div>
             <form id="login" class="input-fields" method="POST" action="">
+                <!-- TODO: Make password not visible for the user -->
                 <input type="text" class="input-box" placeholder="Enter Username" name="username" required>
                 <input type="password" class="input-box" placeholder="Enter Password" name="password" required>
-                <input type="checkbox" class="check-box"><span class="remember">Remember Password</span>
+                <input type="checkbox" class="check-box"><span class="remember">Remember Username</span>
                 <button id="logging" name="logging" type="submit" class="submit-button">Log In</button>
             </form>
 
             <form id="register" class="input-fields" method="POST" action="login.php">
+                <!-- TODO: Make password and confirm password invisible -->
                 <input id="fullname" name="fullname" type="text" class="input-box" placeholder="Enter Full Name" required>
                 <input id="email" name="email" type="email" class="input-box" placeholder="Enter Email" required>
                 <input id="reg_username" name="reg_username" type="text" class="input-box" placeholder="Choose Username" required>
                 <input id="reg_password" name="reg_password" type="text" class="input-box" placeholder="Enter Password" required>
                 <input id="confirm" name="confirm" type="text" class="input-box" placeholder="Re-enter Password" required>
-                <input type="checkbox" class="check-box"><span class="remember" required>I agree to the terms & conditions</span> <!-- TODO: Make this required, somehow this isnt required  -->
+                <input type="checkbox" class="check-box" required><span class="remember">I agree to the terms & conditions</span> <!-- TODO: Make this required, somehow this isnt required  -->
                 <button id="registering" name="registering" type="submit" class="submit-button">Register</button>
             </form>
         </div>
