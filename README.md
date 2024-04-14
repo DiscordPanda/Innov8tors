@@ -11,6 +11,8 @@ This application is accessible to any user!
 
 
 In order to use the application, you must register your information by entering your first and last name, email address, and a unique password. 
+![image](https://github.com/DiscordPanda/Innov8tors/assets/158240988/13c261aa-b095-4c3a-b7bc-e23d94424bf3)
+
 
 Once your login is created, you will have access to your own personalized to-do list and all of the information entered will be saved and secured, even if you log out!
 
@@ -20,6 +22,8 @@ Once your login is created, you will have access to your own personalized to-do 
 **Features**
 
 Login: Create a username and password to keep all of your tasks stored in one place.
+![image](https://github.com/DiscordPanda/Innov8tors/assets/158240988/33e6b3da-cca6-43a1-8f74-dc08b78ed4e7)
+
 
 Organization: All tasks are listed on a sinlge page and organized by priority.
 
