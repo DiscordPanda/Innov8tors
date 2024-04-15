@@ -121,7 +121,7 @@ session_start();
                                     if (mysqli_num_rows($result) > 0) { # TODO: We need to create a form here to retrieve REQUEST_METHOD
                                         while ($row = mysqli_fetch_assoc($result)) { # Creates a li element with a class and a name and to add the "X" button at the end of task description
                                             $isChecked = $row['done'] == 1 ? 'checked' : 'notchecked'; # could add this to css to "check"
-                                            echo "<li class='$isChecked'>" . $row['description'] . "<a href='ToDo.php?taskid=".$row['taskid']."' class='delete-button' >X</a></li>";
+                                            echo "<li class='$isChecked'>" . $row['description'] . "<a href='ToDo.php?taskid=".$row['taskid']."' class='delete-button' style='text-decoration: none; color: red;'>X</a></li>";
                                         }
                                     }
                                 }
