@@ -102,8 +102,8 @@ mysqli_close($conn);
                 <input id="fullname" name="fullname" type="text" class="input-box" placeholder="Enter Full Name" required>
                 <input id="email" name="email" type="email" class="input-box" placeholder="Enter Email" required>
                 <input id="reg_username" name="reg_username" type="text" class="input-box" placeholder="Choose Username" required>
-                <input id="reg_password" name="reg_password" type="text" class="input-box" placeholder="Enter Password" required>
-                <input id="confirm" name="confirm" type="text" class="input-box" placeholder="Re-enter Password" required>
+                <input id="reg_password" name="reg_password" type="password" class="input-box" placeholder="Enter Password" required>
+                <input id="confirm" name="confirm" type="password" class="input-box" placeholder="Re-enter Password" required>
                 <input type="checkbox" class="check-box" required><span class="remember">I agree to the terms & conditions</span> <!-- TODO: Make this required, somehow this isnt required  -->
                 <button id="registering" name="registering" type="submit" class="submit-button">Register</button>
             </form>
